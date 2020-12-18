@@ -31,6 +31,13 @@ public class Authenticate extends HttpServlet {
 		String destination = null;
 		String name = request.getParameter("UserName");
 		String pass = request.getParameter("PassWord");
+		HttpSession sessionget = request.getSession();
+		String nameget = (String) sessionget.getAttribute("userName");
+		String passget = (String) sessionget.getAttribute("passWord");
+		if (nameget != null && passget != null) {
+			name = nameget;
+			pass = passget;
+		}
 		AuthenticateBO authenticateBO = new AuthenticateBO();
 		User user = new User();
 		user = authenticateBO.isUser(name, pass);
@@ -43,6 +50,7 @@ public class Authenticate extends HttpServlet {
 			listUsers = getAllUserBO.getListUser();
 			HttpSession session = request.getSession();
 			session.setAttribute("name", user.getusername());
+			session.setAttribute("pass", user.getpassword());
 			session.setAttribute("id", String.valueOf(user.getid()));
 			request.setAttribute("listMessage", listMessage);
 			request.setAttribute("listUser", listUsers);

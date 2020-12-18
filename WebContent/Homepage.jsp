@@ -12,6 +12,14 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<%
+	String userName = String.valueOf(session.getAttribute("name"));
+	session.setAttribute("userName", userName);
+	String passWord = String.valueOf(session.getAttribute("pass"));
+	session.setAttribute("passWord", passWord);
+	String id_user = String.valueOf(session.getAttribute("id"));
+	session.setAttribute("id_user", id_user);
+%>
 <body>
 	<div class="topDiv">
 		<h2 align="center"><%=session.getAttribute("name")%>'s Mail
@@ -35,8 +43,7 @@
 				if (listMessage.size() != 0) {
 			%>
 			<TR>
-				<TH><input type="checkbox"
-					value="<%=session.getAttribute("id")%>" name="id_user" disabled></TH>
+				<TH></TH>
 				<TH>Sender</TH>
 				<TH>Title</TH>
 				<TH>Time</TH>
@@ -47,7 +54,7 @@
 			%>
 			<tr>
 				<td align='center'><input type="checkbox" name="listDelete"
-					value="<%=listMessage.get(i).getid()%>"></td>
+					id="listDelete" value="<%=listMessage.get(i).getid()%>"></td>
 				<td>
 					<%
 						String name = "";
@@ -75,8 +82,7 @@
 				onclick="return confirm('Are you sure?')"></span> <span> <i
 				class="fa fa-plus-square"></i>
 			</span> <span><a href="Compose.jsp"> <input type="button"
-					name="btAdd" value="Compose">
-			</a> </span>
+					name="btAdd" value="Compose"></a> </span>
 		</div>
 	</form>
 	<%
@@ -85,12 +91,32 @@
 	<div class="centerDiv">
 		<h3>Empty</h3>
 		<a href="Compose.jsp"> <i class="fa fa-plus-square"></i><input
-			type="button" name="btAdd" value="Compose">
-		</a>
+			type="button" name="btAdd" value="Compose"></a>
 	</div>
 	<%
 		}
 	%>
-
+	<form action="Authenticate" name="refesh" id="refesh" method="POST">
+	</form>
 </body>
 </html>
+
+<script type="text/javascript">
+	var auto_refresh = setInterval(function() {
+		submitform();
+	}, 5000);
+
+	function submitform() {
+		var checkboxes = document.getElementsByName("listDelete");
+		var checkboxesChecked = [];
+		for (var i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked == true) {
+				var check = true;
+			}
+		}
+		
+		if (check != true) {
+			document.getElementById("refesh").submit();
+		}
+	}
+</script>
