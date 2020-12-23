@@ -47,17 +47,24 @@
 				<TH>Content</TH>
 				<td><%=message.getcontent()%></td>
 			</TR>
+			<%
+				if (attachment.size() != 0) {
+			%></TR>
+			<TR>
+				<TH>File</TH>
+				<td>
+					<%
+						for (int i = 0; i < attachment.size(); i++) {
+								String f_n = (attachment.get(i)).getfile_name();
+					%> <a href="DownloadAttachment?id_attachment=<%=attachment.get(i).getid()%>"><%=f_n%></a><br> <%
+ 	}
+ %>
+				</td>
+			</TR>
+			<%
+				}
+			%>
 		</table>
-		<%
-			if (attachment.size() != 0) {
-				for (int i = 0; i < attachment.size(); i++) {
-					String f_n = (attachment.get(i)).getfile_name();
-		%>
-		<a href=#><%=f_n%></a>
-		<%
-			}
-			}
-		%>
 	</div>
 	<%
 		String name_sender = name;

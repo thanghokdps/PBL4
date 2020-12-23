@@ -29,7 +29,7 @@
 				<i class="fa fa-send"></i>Login
 			</button>
 			<p class="fs">
-				<a href="#"> Forgot Account? </a>
+				<a href="ForgetPassword.jsp"> Forgot Account? </a>
 			</p>
 			<p class="ss">
 				Don't have an account? <a href="Register.jsp">Register</a>

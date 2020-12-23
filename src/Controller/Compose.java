@@ -65,16 +65,15 @@ public class Compose extends HttpServlet {
 				listUser = getAllUserBO.getListUser();
 				request.setAttribute("listMessage", listMessage);
 				request.setAttribute("listUser", listUser);
-				//Part filePart = request.getPart("file");
-				 for (Part part : request.getParts()) {
-		               String file_name = extractFileName(part);
-		               if (file_name != null && file_name.length() > 0) {
-		                   InputStream is = part.getInputStream();
-		                   byte[] data = is.readAllBytes();
-		                   String file_data = data.toString();
-		                   composeBO.insertAttachment(file_name, file_data);
-		               }
-		           }
+				for (Part part : request.getParts()) {
+					String file_name = extractFileName(part);
+					if (file_name != null && file_name.length() > 0) {
+						InputStream is = part.getInputStream();
+						byte[] data = is.readAllBytes();
+						String file_data = data.toString();
+						composeBO.insertAttachment(file_name, file_data);
+					}
+				}
 				destination = "/Homepage.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);

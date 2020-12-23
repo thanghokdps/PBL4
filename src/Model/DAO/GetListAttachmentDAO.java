@@ -56,12 +56,12 @@ public class GetListAttachmentDAO {
 				attachment = null;
 			} else {
 				String show_Attachment = response.get("show_Attachment");
-				attachment = gson.fromJson(show_Attachment, new TypeToken<Attachment>() {
+				attachment = gson.fromJson(show_Attachment, new TypeToken<ArrayList<Attachment>>() {
 				}.getType());
 			}
 		} catch (IOException e) {
 			System.out.println("ToServer");
-			attachment = null;
+			attachment = null;		
 		}
 		return attachment;
 	}

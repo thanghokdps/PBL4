@@ -5,6 +5,7 @@ public class Attachment {
 	private int id_mess;
 	private String file_name;
 	private String file_data;
+
 	public Attachment() {
 
 	}
@@ -15,6 +16,7 @@ public class Attachment {
 		this.file_name = file_name;
 		this.file_data = file_data;
 	}
+
 	public int getid() {
 		return id;
 	}
