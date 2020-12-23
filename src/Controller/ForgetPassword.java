@@ -38,10 +38,8 @@ public class ForgetPassword extends HttpServlet {
 		try {
 			ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
 		} catch (AddressException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		destination = "/ConfirmForm.jsp";
@@ -49,4 +47,3 @@ public class ForgetPassword extends HttpServlet {
 		rd.forward(request, response);
 	}
 }
-
