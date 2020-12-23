@@ -65,4 +65,45 @@ public class ComposeDAO {
 			return false;
 		}
 	}
+	@SuppressWarnings("unchecked")
+	public boolean insertAttachment(String file_name, String file_data) {
+		try {
+			this.soc = new Socket("localhost", 9696);
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
+		try {
+			is = soc.getInputStream();
+			isr = new InputStreamReader(is);
+			br = new BufferedReader(isr);
+			if (pw == null) {
+				pw = new PrintWriter(soc.getOutputStream());
+			}
+		} catch (Exception e) {
+			System.out.println("Error User Thread");
+		}
+		try {
+			HashMap<String, String> pairs = new HashMap<>();
+			pairs.put("command", "insert_attachment");
+			pairs.put("file_name", file_name);
+			pairs.put("file_data", file_data);
+			String request = gson.toJson(pairs);
+			request = request + "\n";
+			pw.write(request);
+			pw.flush();
+
+			String strRes = br.readLine();
+			HashMap<String, String> response = new HashMap<>();
+			response = gson.fromJson(strRes, response.getClass());
+			String status = response.get("status");
+			if (status.equals("fail")) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("ToServer");
+			return false;
+		}
+	}
 }

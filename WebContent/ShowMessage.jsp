@@ -1,3 +1,5 @@
+<%@page import="java.io.ByteArrayOutputStream"%>
+<%@page import="Model.BEAN.Attachment"%>
 <%@page import="Model.BEAN.User"%>
 <%@page import="Model.BEAN.Message"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,8 +21,7 @@
 	</div>
 	<%
 		Message message = (Message) request.getAttribute("mess");
-	%>
-	<%
+		ArrayList<Attachment> attachment = (ArrayList<Attachment>) request.getAttribute("attachment");
 		ArrayList<User> listUser = (ArrayList<User>) request.getAttribute("listUser");
 	%>
 	<div class="centerDiv">
@@ -47,6 +48,16 @@
 				<td><%=message.getcontent()%></td>
 			</TR>
 		</table>
+		<%
+			if (attachment.size() != 0) {
+				for (int i = 0; i < attachment.size(); i++) {
+					String f_n = (attachment.get(i)).getfile_name();
+		%>
+		<a href=#><%=f_n%></a>
+		<%
+			}
+			}
+		%>
 	</div>
 	<%
 		String name_sender = name;

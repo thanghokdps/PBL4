@@ -5,6 +5,7 @@ import Model.DAO.ShowMessageDAO;
 
 public class ShowMessageBO {
 	ShowMessageDAO showMessageDAO = new ShowMessageDAO();
+
 	public Message getMessage(String id) {
 		Message message = new Message();
 		try {

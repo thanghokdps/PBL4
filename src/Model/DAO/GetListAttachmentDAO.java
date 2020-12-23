@@ -6,14 +6,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import Model.BEAN.Message;
 
-public class ShowMessageDAO {
+import Model.BEAN.Attachment;
+
+public class GetListAttachmentDAO {
 	private InputStream is;
 	private InputStreamReader isr;
 	private BufferedReader br;
@@ -22,7 +23,7 @@ public class ShowMessageDAO {
 	Gson gson = new Gson();
 
 	@SuppressWarnings("unchecked")
-	public Message getMessage(String id) throws SQLException, IOException {
+	public ArrayList<Attachment> getAttachment(String id_mess) {
 		try {
 			this.soc = new Socket("localhost", 9696);
 		} catch (Exception e) {
@@ -38,11 +39,11 @@ public class ShowMessageDAO {
 		} catch (Exception e) {
 			System.out.println("Error User Thread");
 		}
-		Message message = new Message();
+		ArrayList<Attachment> attachment = new ArrayList<Attachment>();
 		try {
 			HashMap<String, String> pairs = new HashMap<>();
-			pairs.put("command", "show_Mess");
-			pairs.put("id", id);
+			pairs.put("command", "show_Attachment");
+			pairs.put("id_mess", id_mess);
 			String request = gson.toJson(pairs);
 			request = request + "\n";
 			pw.write(request);
@@ -51,14 +52,17 @@ public class ShowMessageDAO {
 			HashMap<String, String> response = new HashMap<>();
 			response = gson.fromJson(strRes, response.getClass());
 			String status = response.get("status");
-			if (status.equals("success")) {
-				String show_mess = response.get("show_Mess");
-				message = gson.fromJson(show_mess, new TypeToken<Message>() {
+			if (status.equals("fail")) {
+				attachment = null;
+			} else {
+				String show_Attachment = response.get("show_Attachment");
+				attachment = gson.fromJson(show_Attachment, new TypeToken<Attachment>() {
 				}.getType());
 			}
 		} catch (IOException e) {
 			System.out.println("ToServer");
+			attachment = null;
 		}
-		return message;
+		return attachment;
 	}
 }

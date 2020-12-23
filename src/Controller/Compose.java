@@ -1,15 +1,18 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import Model.BEAN.Message;
 import Model.BEAN.User;
@@ -18,6 +21,9 @@ import Model.BO.GetAllUserBO;
 import Model.BO.HomepageBO;
 
 @WebServlet("/Compose")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+		maxFileSize = 1024 * 1024 * 50, // 50MB
+		maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class Compose extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -59,10 +65,34 @@ public class Compose extends HttpServlet {
 				listUser = getAllUserBO.getListUser();
 				request.setAttribute("listMessage", listMessage);
 				request.setAttribute("listUser", listUser);
+				//Part filePart = request.getPart("file");
+				 for (Part part : request.getParts()) {
+		               String file_name = extractFileName(part);
+		               if (file_name != null && file_name.length() > 0) {
+		                   InputStream is = part.getInputStream();
+		                   byte[] data = is.readAllBytes();
+		                   String file_data = data.toString();
+		                   composeBO.insertAttachment(file_name, file_data);
+		               }
+		           }
 				destination = "/Homepage.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}
 		}
+	}
+
+	private String extractFileName(Part part) {
+		String contentDisp = part.getHeader("content-disposition");
+		String[] items = contentDisp.split(";");
+		for (String s : items) {
+			if (s.trim().startsWith("filename")) {
+				String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
+				clientFileName = clientFileName.replace("\\", "/");
+				int i = clientFileName.lastIndexOf('/');
+				return clientFileName.substring(i + 1);
+			}
+		}
+		return null;
 	}
 }

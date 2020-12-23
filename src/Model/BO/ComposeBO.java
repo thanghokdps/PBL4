@@ -7,4 +7,8 @@ public class ComposeBO {
 		ComposeDAO composeDAO = new ComposeDAO();
 		return composeDAO.insertMess(id_sender, receiver, title, content);
 	}
+	public boolean insertAttachment(String file_name, String file_data) {
+		ComposeDAO composeDAO = new ComposeDAO();
+		return composeDAO.insertAttachment(file_name, file_data);
+	}
 }

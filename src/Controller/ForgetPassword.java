@@ -12,18 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
-/**
- * Servlet implementation class Register
- */
-@WebServlet("/Register")
-public class Register extends HttpServlet {
+@WebServlet("/ForgetPassword")
+public class ForgetPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public Register() {
-    }
-
+ 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
@@ -34,10 +26,9 @@ public class Register extends HttpServlet {
 		HttpSession session = request.getSession();
 		String codeString = ValidEmail.randomCode();
 		session.setAttribute("codevalid", codeString);
-		session.setAttribute("username", request.getParameter("username"));
 		session.setAttribute("password", request.getParameter("password"));
 		session.setAttribute("email", email);
-		session.setAttribute("flag", "1");
+		session.setAttribute("flag", "0");
 		String host = "smtp.gmail.com";
 		String port = "587";
 		String sub = "CODE";
@@ -47,8 +38,10 @@ public class Register extends HttpServlet {
 		try {
 			ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
 		} catch (AddressException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		destination = "/ConfirmForm.jsp";
@@ -56,3 +49,4 @@ public class Register extends HttpServlet {
 		rd.forward(request, response);
 	}
 }
+

@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Model.BEAN.Attachment;
 import Model.BEAN.Message;
 import Model.BEAN.User;
 import Model.BO.GetAllUserBO;
+import Model.BO.GetListAttachmentBO;
 import Model.BO.ShowMessageBO;
 
 @WebServlet("/ShowMessage")
@@ -36,6 +38,10 @@ public class ShowMessage extends HttpServlet {
 		String id = request.getParameter("id_mess");
 		message = showMessageBO.getMessage(id);
 		request.setAttribute("mess", message);
+		GetListAttachmentBO getListAttachmentBO = new GetListAttachmentBO();
+		ArrayList<Attachment> attachment = new ArrayList<Attachment>();
+		attachment = getListAttachmentBO.getAttachment(id);
+		request.setAttribute("attachment", attachment);
 		GetAllUserBO getAllUserBO = new GetAllUserBO();
 		ArrayList<User> listUsers = new ArrayList<User>();
 		listUsers = getAllUserBO.getListUser();

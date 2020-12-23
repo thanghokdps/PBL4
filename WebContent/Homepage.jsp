@@ -79,12 +79,14 @@
 		<div class="centerDiv">
 			<span><i class="fa fa-trash"></i></span><span><input
 				type="submit" name="btnDel" value="Delete"
-				onclick="return confirm('Are you sure?')"></span> <span> <i
-				class="fa fa-plus-square"></i>
-			</span> <span><a href="Compose.jsp"> <input type="button"
-					name="btAdd" value="Compose"></a> </span>
+				onclick="return confirm('Are you sure?')"></span>
 		</div>
 	</form>
+	<div class="centerDiv">
+		<span> <i class="fa fa-plus-square"></i>
+		</span> <span><a href="Compose.jsp"> <input type="button"
+				name="btAdd" value="Compose"></a> </span>
+	</div>
 	<%
 		} else {
 	%>
@@ -114,7 +116,7 @@
 				var check = true;
 			}
 		}
-		
+
 		if (check != true) {
 			document.getElementById("refesh").submit();
 		}

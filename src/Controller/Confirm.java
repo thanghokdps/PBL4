@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -34,26 +35,44 @@ public class Confirm extends HttpServlet {
 		HttpSession session = request.getSession();
 		String codevalid = (String)session.getAttribute("codevalid");
 		String code = request.getParameter("confirmcode");
-		String email = (String)session.getAttribute("email");
-		String username = (String)session.getAttribute("username");
-		String password = (String)session.getAttribute("password");
+		
 		if (code.equals(codevalid)) {
-			ConfirmBO confirmBO = new ConfirmBO();
-			if (confirmBO.Confirm(email, username, password)) {
-				AuthenticateBO authenticateBO = new AuthenticateBO();
-				User user = new User();
-				user = authenticateBO.isUser(username, password);
-				session.setAttribute("id", user.getid());
-				HomepageBO homepageBO = new HomepageBO();
-				ArrayList<Message> listMessage = new ArrayList<Message>();
-				listMessage = homepageBO.getListMessage(String.valueOf(user.getid()));
-				request.setAttribute("listMessage", listMessage);
-				destination = "/Homepage.jsp";
-				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-				rd.forward(request, response);
+			if ((String)session.getAttribute("flag")=="1") {
+				ConfirmBO confirmBO = new ConfirmBO();
+				String email = (String)session.getAttribute("email");
+				String username = (String)session.getAttribute("username");
+				String password = (String)session.getAttribute("password");
+				if (confirmBO.Confirm(email, username, password)) {
+					AuthenticateBO authenticateBO = new AuthenticateBO();
+					User user = new User();
+					user = authenticateBO.isUser(username, password);
+					session.setAttribute("id", user.getid());
+					HomepageBO homepageBO = new HomepageBO();
+					ArrayList<Message> listMessage = new ArrayList<Message>();
+					listMessage = homepageBO.getListMessage(String.valueOf(user.getid()));
+					request.setAttribute("listMessage", listMessage);
+					destination = "/Homepage.jsp";
+					RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+					rd.forward(request, response);
+				}
+				else {
+					System.out.println("khong the dang ky");
+				}
 			}
-			else {
-				System.out.println("khong the dang ky");
+			else if((String)session.getAttribute("flag")=="0"){
+				ConfirmBO confirmBO = new ConfirmBO();
+				String email = (String)session.getAttribute("email");
+				String password = (String)session.getAttribute("password");
+				try {
+					if (confirmBO.forgetPassword(email, password)) {
+						destination = "/Login.jsp";
+						RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+						rd.forward(request, response);
+					}
+				} catch (SQLException | IOException | ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		else {

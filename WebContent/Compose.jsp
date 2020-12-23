@@ -19,7 +19,8 @@
 	<div class=topDiv>
 		<h2>Send New E-mail</h2>
 	</div>
-	<form action="Compose" name="compose mail" method="post">
+	<form action="Compose" name="compose mail" method="post"
+		enctype="multipart/form-data">
 		<table border="0" width="35%" align="center">
 			<tr>
 				<td width="50%">To:</td>
@@ -33,6 +34,10 @@
 			<tr>
 				<td>Content:</td>
 				<td><textarea rows="10" cols="39" name="content"></textarea></td>
+			</tr>
+			<tr>
+				<td>UpFile:</td>
+				<td><input type="file" name="file" size="35" multiple /></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><span><i
