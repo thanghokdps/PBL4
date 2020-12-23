@@ -36,20 +36,21 @@ public class ComposeMail extends HttpServlet {
 		HttpSession session = request.getSession();
 		int id_sender = (int)session.getAttribute("id") ;
 		ComposeMailBO composeMailBO = new ComposeMailBO();
-		if (!composeMailBO.sendMail(id_sender, receiver, title, content)) {
-			System.out.println("khong gui dc");
+		String result=composeMailBO.sendMail(id_sender, receiver, title, content);
+		if (result.equals("")) {
+			System.out.println("Khong gui dc");
 		}
 		else {
 			System.out.println("Success");
-			request.setAttribute("alertMsg", "send sucess");
-			HomepageBO homepageBO = new HomepageBO();
-			ArrayList<Message> listMessage = new ArrayList<Message>();
-			listMessage = homepageBO.getListMessage(session.getAttribute("id").toString());
-			request.setAttribute("listMessage", listMessage);
-			destination = "/Homepage.jsp";
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-			rd.forward(request, response);
 		}
+		request.setAttribute("alertMsg", result);
+		HomepageBO homepageBO = new HomepageBO();
+		ArrayList<Message> listMessage = new ArrayList<Message>();
+		listMessage = homepageBO.getListMessage(session.getAttribute("id").toString());
+		request.setAttribute("listMessage", listMessage);
+		destination = "/Homepage.jsp";
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+		rd.forward(request, response);
 			
 	}
 

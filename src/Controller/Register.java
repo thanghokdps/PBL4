@@ -41,11 +41,12 @@ public class Register extends HttpServlet {
 		String destination = null;
 		String email = request.getParameter("email");
 		HttpSession session = request.getSession();
-		String codeString = randomCode();
+		String codeString = ValidEmail.randomCode();
 		session.setAttribute("codevalid", codeString);
 		session.setAttribute("username", request.getParameter("username"));
 		session.setAttribute("password", request.getParameter("password"));
 		session.setAttribute("email", email);
+		session.setAttribute("flag", "1");
 		String host = "smtp.gmail.com";
 		String port = "587";
 		String sub = "CODE";
@@ -53,7 +54,7 @@ public class Register extends HttpServlet {
 		String passString = "hoa10chuyen";
 		
 		try {
-			sendEmail(host, port, usernameString, passString, email, sub, codeString);
+			ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,63 +62,8 @@ public class Register extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		destination = "/Confirm.jsp";
+		destination = "/ConfirmForm.jsp";
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 		rd.forward(request, response);
-	}
-	
-
-	
-	
-	public static void sendEmail(String host, String port,
-		final String userName, final String password, String toAddress,
-		String subject, String message) throws AddressException,
-		MessagingException {
-
-		// sets SMTP server properties
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
-		props.put("mail.smtp.port", "587"); //TLS Port
-		props.put("mail.smtp.auth", "true"); //enable authentication
-		props.put("mail.smtp.starttls.enable", "true");
-
-		// creates a new session with an authenticator
-		Authenticator auth = new Authenticator() {
-			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(userName, password);
-			}
-		};
-	
-		Session session = Session.getInstance(props, auth);
-
-		// creates a new e-mail message
-		javax.mail.Message msg = new MimeMessage(session);
-	
-		msg.setFrom(new InternetAddress(userName));
-		InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
-		msg.setRecipients(javax.mail.Message.RecipientType.TO, toAddresses);
-		msg.setSubject(subject);
-		msg.setSentDate(new Date());
-		msg.setText(message);
-	
-		// sends the e-mail
-		Transport.send(msg);
-	}
-	
-	public String randomCode() {
-		int leftLimit = 97; // letter 'a'
-	    int rightLimit = 122; // letter 'z'
-	    int targetStringLength = 10;
-	    Random random = new Random();
-	    StringBuilder buffer = new StringBuilder(targetStringLength);
-	    for (int i = 0; i < targetStringLength; i++) {
-	        int randomLimitedInt = leftLimit + (int) 
-	          (random.nextFloat() * (rightLimit - leftLimit + 1));
-	        buffer.append((char) randomLimitedInt);
-	    }
-	    String generatedString = buffer.toString();
-
-	    System.out.println(generatedString);
-	    return generatedString;
 	}
 }
