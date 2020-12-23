@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@page import="Model.BEAN.User"%>
 <%@page import="Model.BEAN.Message"%>
 <%@page import="java.util.ArrayList"%>
