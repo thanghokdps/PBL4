@@ -81,12 +81,9 @@ public class ComposeDAO {
 			System.out.println("Error User Thread");
 		}
 		try {
-			String id_mess_sent = id_mess.substring(id_mess.lastIndexOf(",")+1);
-			id_mess = id_mess.substring(0, id_mess.lastIndexOf(",")-1);
 			HashMap<String, String> pairs = new HashMap<>();
 			pairs.put("command", "insert_attachment");
 			pairs.put("id_mess",id_mess);
-			pairs.put("id_mess_sent", id_mess_sent);
 			pairs.put("file_name", file_name);
 			pairs.put("file_data", file_data);
 			String request = gson.toJson(pairs);

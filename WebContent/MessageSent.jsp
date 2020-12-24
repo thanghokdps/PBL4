@@ -27,14 +27,14 @@
 		</h2>
 	</div>
 	<div class="centerDiv">
-		<form action="SearchMessage" method="POST">
+		<form action="SearchMessageSent" method="POST">
 			<span> LOOK FOR INFORMATION : </span><span><input type="text"
 				width="35%" name="search"></span> <span><i
 				class="fa fa-search"></i></span> <span><input type="submit"
 				value="Search"></span>
 		</form>
 	</div>
-	<form action="DeleteMessage" method="POST">
+	<form action="DeleteMessageSent" method="POST">
 		<table border="1" width="100%">
 			<%
 				ArrayList<Message_Sent> listMessage = (ArrayList<Message_Sent>) request.getAttribute("listMessage");
@@ -74,7 +74,7 @@
 		<span> <i class="fa fa-plus-square"></i>
 		</span> <span><a href="Compose.jsp"> <input type="button"
 				name="btAdd" value="Compose"></a> </span>
-		<span><a href="Homepage"> <input type="button"
+		<span><a href="Authenticate"> <input type="button"
 				name="btInbox" value="Inbox"></a> </span>
 	</div>
 	<%
@@ -84,13 +84,13 @@
 		<h3>Empty</h3>
 		<a href="Compose.jsp"> <i class="fa fa-plus-square"></i><input
 			type="button" name="btAdd" value="Compose"></a>
-		<a href="Homepage"> <i class="fa fa-plus-square"></i><input
+		<a href="Authenticate"> <i class="fa fa-plus-square"></i><input
 			type="button" name="btInbox" value="Inbox"></a>
 	</div>
 	<%
 		}
 	%>
-	<form action="Authenticate" name="refesh" id="refesh" method="POST">
+	<form action="MessageSent" name="refesh" id="refesh" method="POST">
 	</form>
 </body>
 </html>
