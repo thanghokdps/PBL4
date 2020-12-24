@@ -1,3 +1,4 @@
+<%@page import="Model.BEAN.Message_Sent"%>
 <%@page import="Model.BEAN.User"%>
 <%@page import="Model.BEAN.Message"%>
 <%@page import="java.util.ArrayList"%>
@@ -36,15 +37,12 @@
 	<form action="DeleteMessage" method="POST">
 		<table border="1" width="100%">
 			<%
-				ArrayList<User> listUser = (ArrayList<User>) request.getAttribute("listUser");
-			%>
-			<%
-				ArrayList<Message> listMessage = (ArrayList<Message>) request.getAttribute("listMessage");
+				ArrayList<Message_Sent> listMessage = (ArrayList<Message_Sent>) request.getAttribute("listMessage");
 				if (listMessage.size() != 0) {
 			%>
 			<TR>
 				<TH></TH>
-				<TH>Sender</TH>
+				<TH>Receivers</TH>
 				<TH>Title</TH>
 				<TH>Time</TH>
 				<TH></TH>
@@ -55,21 +53,11 @@
 			<tr>
 				<td align='center'><input type="checkbox" name="listDelete"
 					id="listDelete" value="<%=listMessage.get(i).getid()%>"></td>
-				<td>
-					<%
-						String name = "";
-								for (int j = 0; j < listUser.size(); j++) {
-									if (listUser.get(j).getid() == listMessage.get(i).getid_sender()) {
-										name = listUser.get(j).getusername();
-										break;
-									}
-								}
-					%> <%=name%>
-				</td>
+				<td><%=listMessage.get(i).getreceivers()%></td>
 				<td><%=listMessage.get(i).gettitle()%></td>
 				<td><%=listMessage.get(i).getcreate_at()%></td>
 				<td align='center'><a
-					href="ShowMessage?id_mess=<%=listMessage.get(i).getid()%>"><i
+					href="ShowMessageSent?id_mess=<%=listMessage.get(i).getid()%>"><i
 						class="fa fa-eye"></i></a></td>
 			</tr>
 			<%
@@ -84,9 +72,10 @@
 	</form>
 	<div class="centerDiv">
 		<span> <i class="fa fa-plus-square"></i>
-		</span> 
-		<span><a href="Compose.jsp"> <input type="button" name="btAdd" value="Compose"></a> </span>
-		<span><a href="MessageSent"> <input type="button" name="btSent" value="Sent"></a> </span>
+		</span> <span><a href="Compose.jsp"> <input type="button"
+				name="btAdd" value="Compose"></a> </span>
+		<span><a href="Homepage"> <input type="button"
+				name="btInbox" value="Inbox"></a> </span>
 	</div>
 	<%
 		} else {
@@ -95,8 +84,8 @@
 		<h3>Empty</h3>
 		<a href="Compose.jsp"> <i class="fa fa-plus-square"></i><input
 			type="button" name="btAdd" value="Compose"></a>
-		<a href="MessageSent"> <i class="fa fa-plus-square"></i><input
-			type="button" name="btSent" value="Sent"></a>
+		<a href="Homepage"> <i class="fa fa-plus-square"></i><input
+			type="button" name="btInbox" value="Inbox"></a>
 	</div>
 	<%
 		}

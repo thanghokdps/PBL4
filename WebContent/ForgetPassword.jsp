@@ -16,10 +16,13 @@
 		if (email == '' || pass == '' || conpass == '') {
 			alert('Khong duoc de trong')
 			return false
-		} else if (!pass.equals(conpass)) {
-			alert('mat khau khong trung nhau')
-			return false
-		} else
+		} else if(!(pass===conpass)){
+		      alert('mat khau khong trung nhau')
+		      return false
+	    } else if (!(email.includes('@gmail.com'))) {
+	        alert('khong dung la dinh dang Gmail')
+	        return false
+	    } else
 			return true
 	}
 </script>
@@ -54,3 +57,9 @@
 	</form>
 </body>
 </html>
+<% String message = (String)request.getAttribute("alertMsg");%>
+<script type="text/javascript">
+   	var msg = "<%=message %>";
+   	if (msg!="null"&&msg!="")
+   		alert(msg);
+</script>

@@ -1,3 +1,5 @@
+<%@page import="Model.BEAN.Attachment_Sent"%>
+<%@page import="Model.BEAN.Message_Sent"%>
 <%@page import="java.io.ByteArrayOutputStream"%>
 <%@page import="Model.BEAN.Attachment"%>
 <%@page import="Model.BEAN.User"%>
@@ -20,28 +22,18 @@
 		</h2>
 	</div>
 	<%
-		Message message = (Message) request.getAttribute("mess");
-		ArrayList<Attachment> attachment = (ArrayList<Attachment>) request.getAttribute("attachment");
-		ArrayList<User> listUser = (ArrayList<User>) request.getAttribute("listUser");
+		Message_Sent message = (Message_Sent) request.getAttribute("mess");
+		ArrayList<Attachment_Sent> attachment = (ArrayList<Attachment_Sent>) request.getAttribute("attachment");
 	%>
 	<div class="centerDiv">
 		<table width="400" height="auto" border="2" align="center">
 			<TR>
 				<TH>Sender</TH>
-				<td>
-					<%
-						String name = "";
-						for (int j = 0; j < listUser.size(); j++) {
-							if (listUser.get(j).getid() == message.getid_sender()) {
-								name = listUser.get(j).getusername();
-								break;
-							}
-						}
-					%> <%=name%></td>
+				<td>Me</td>
 			</TR>
 			<TR>
 				<TH>Receiver</TH>
-				<td>Me</td>
+				<td> <%=message.getreceivers()%></td>
 			</TR>
 			<TR>
 				<TH>Title</TH>
@@ -71,14 +63,14 @@
 		</table>
 	</div>
 	<%
-		String name_sender = name;
+		String name_sender = message.getreceivers();
 		session.setAttribute("name_sender", name_sender);
 	%>
 	<div class="centerDiv">
 		<span><i class="fa fa-reply"> </i></span><span><a
 			href="javascript:history.back()"><input type="button"
 				value="Back"></a></span> <span><i class="fa fa-share"> </i></span><span><a
-			href="Compose?name_sender=<%=name%>"><input type="button"
+			href="Compose?name_sender=<%=message.getreceivers()%>"><input type="button"
 				value="Reply"></a></span>
 	</div>
 </body>

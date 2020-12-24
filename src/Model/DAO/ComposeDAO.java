@@ -1,6 +1,7 @@
 package Model.DAO;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -20,7 +21,7 @@ public class ComposeDAO {
 	Gson gson = new Gson();
 
 	@SuppressWarnings("unchecked")
-	public boolean insertMess(int id_sender, String receiver, String title, String content) {
+	public String insertMess(int id_sender, String receiver, String title, String content) {
 		try {
 			this.soc = new Socket("localhost", 9696);
 		} catch (Exception e) {
@@ -54,19 +55,16 @@ public class ComposeDAO {
 			String strRes = br.readLine();
 			HashMap<String, String> response = new HashMap<>();
 			response = gson.fromJson(strRes, response.getClass());
-			String status = response.get("status");
-			if (status.equals("fail")) {
-				return false;
-			} else {
-				return true;
-			}
-		} catch (Exception e) {
-			System.out.println("ToServer");
-			return false;
-		}
+            String id_mess = response.get("id_mess");
+            String id_mess_sent = response.get("id_mess_sent");
+            return id_mess+","+id_mess_sent;
+        } catch (IOException e) {
+        	System.out.println("ToServer");
+        	return "";
+        }
 	}
 	@SuppressWarnings("unchecked")
-	public boolean insertAttachment(String file_name, String file_data) {
+	public boolean insertAttachment(String id_mess, String file_name, String file_data) {
 		try {
 			this.soc = new Socket("localhost", 9696);
 		} catch (Exception e) {
@@ -83,8 +81,12 @@ public class ComposeDAO {
 			System.out.println("Error User Thread");
 		}
 		try {
+			String id_mess_sent = id_mess.substring(id_mess.lastIndexOf(",")+1);
+			id_mess = id_mess.substring(0, id_mess.lastIndexOf(",")-1);
 			HashMap<String, String> pairs = new HashMap<>();
 			pairs.put("command", "insert_attachment");
+			pairs.put("id_mess",id_mess);
+			pairs.put("id_mess_sent", id_mess_sent);
 			pairs.put("file_name", file_name);
 			pairs.put("file_data", file_data);
 			String request = gson.toJson(pairs);

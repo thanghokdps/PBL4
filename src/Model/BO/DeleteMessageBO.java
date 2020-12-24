@@ -12,4 +12,14 @@ public class DeleteMessageBO {
 		}
 		return check;
 	}
+	
+	public boolean deleteMessageSent(String[] listId) {
+		boolean check = false;
+		try {
+			check = deleteMessageDAO.deleteMessageSent(listId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return check;
+	}
 }

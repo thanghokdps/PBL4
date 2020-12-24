@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <title>Dashio - Bootstrap Admin Template</title>
+  <title>Register page</title>
 
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
@@ -81,6 +81,12 @@
     }
     else return true
   }
+</script>
+<% String message = (String)request.getAttribute("alertMsg");%>
+<script type="text/javascript">
+   	var msg = "<%=message %>";
+   	if (msg!="null"&&msg!="")
+  		alert(msg);
 </script>
 </body>
 </html>

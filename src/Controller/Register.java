@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Model.BO.ValidEmailBO;
+
 
 
 /**
@@ -30,29 +32,53 @@ public class Register extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String destination = null;
-		String email = request.getParameter("email");
-		HttpSession session = request.getSession();
-		String codeString = ValidEmail.randomCode();
-		session.setAttribute("codevalid", codeString);
-		session.setAttribute("username", request.getParameter("username"));
-		session.setAttribute("password", request.getParameter("password"));
-		session.setAttribute("email", email);
-		session.setAttribute("flag", "1");
-		String host = "smtp.gmail.com";
-		String port = "587";
-		String sub = "CODE";
-		String usernameString  = "hoa10chuyenltt2015@gmail.com";
-		String passString = "hoa10chuyen";
-		
+		String email = request.getParameter("email");	
+		String username = request.getParameter("username");
 		try {
-			ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
+			ValidEmailBO validEmailBO = new ValidEmailBO();
+			int valid  = validEmailBO.validAcc(email,username);
+			if (valid==0) {
+				HttpSession session = request.getSession();
+				String codeString = ValidEmail.randomCode();
+				session.setAttribute("codevalid", codeString);
+				session.setAttribute("username", username);
+				session.setAttribute("password", request.getParameter("password"));
+				session.setAttribute("email", email);
+				session.setAttribute("flag", "1");
+				String host = "smtp.gmail.com";
+				String port = "587";
+				String sub = "CODE";
+				String usernameString  = "hoa10chuyenltt2015@gmail.com";
+				String passString = "hoa10chuyen";
+				ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
+				destination = "/ConfirmForm.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+			else if (valid==1){
+				request.setAttribute("alertMsg", "Username da ton tai");
+				destination = "/Register.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+			else if (valid==2) {
+				request.setAttribute("alertMsg", "Email da ton tai");
+				destination = "/Register.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+			else {
+				request.setAttribute("alertMsg", "Error");
+				destination = "/Register.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+			
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		destination = "/ConfirmForm.jsp";
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-		rd.forward(request, response);
+		
 	}
 }

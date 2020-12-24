@@ -53,10 +53,25 @@ public class Compose extends HttpServlet {
 			String id_sender = (String) session.getAttribute("id");
 			int id_sd = Integer.parseInt(id_sender);
 			ComposeBO composeBO = new ComposeBO();
-			if (!composeBO.insertMess(id_sd, receiver, title, content)) {
+			String result=composeBO.insertMess(id_sd, receiver, title, content);
+			if (result.equals("")) {
 				System.out.println("Don't send");
+				request.setAttribute("alertMsg", "Sent email fail");
+				destination = "/Homepage.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
 			} else {
-				request.setAttribute("alertMsg", "send sucess");
+				for (Part part : request.getParts()) {
+					String file_name = extractFileName(part);
+					if (file_name != null && file_name.length() > 0) {
+						InputStream is = part.getInputStream();
+						byte[] data = is.readAllBytes();
+						String file_data = data.toString();
+						composeBO.insertAttachment(result, file_name, file_data);
+					}
+				}
+				System.out.println("Send success");
+				request.setAttribute("alertMsg", "Sent email success");
 				HomepageBO homepageBO = new HomepageBO();
 				ArrayList<Message> listMessage = new ArrayList<Message>();
 				listMessage = homepageBO.getListMessage(String.valueOf(session.getAttribute("id")));
@@ -65,15 +80,6 @@ public class Compose extends HttpServlet {
 				listUser = getAllUserBO.getListUser();
 				request.setAttribute("listMessage", listMessage);
 				request.setAttribute("listUser", listUser);
-				for (Part part : request.getParts()) {
-					String file_name = extractFileName(part);
-					if (file_name != null && file_name.length() > 0) {
-						InputStream is = part.getInputStream();
-						byte[] data = is.readAllBytes();
-						String file_data = data.toString();
-						composeBO.insertAttachment(file_name, file_data);
-					}
-				}
 				destination = "/Homepage.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);

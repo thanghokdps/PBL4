@@ -69,6 +69,9 @@ public class Confirm extends HttpServlet {
 						RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 						rd.forward(request, response);
 					}
+					else {
+						System.out.println("khong the reset mat khau");
+					}
 				} catch (SQLException | IOException | ServletException e) {
 					e.printStackTrace();
 				}

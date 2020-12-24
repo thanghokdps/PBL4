@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Model.BO.ValidEmailBO;
+
 @WebServlet("/ForgetPassword")
 public class ForgetPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,27 +25,36 @@ public class ForgetPassword extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String destination = null;
 		String email = request.getParameter("email");
-		HttpSession session = request.getSession();
-		String codeString = ValidEmail.randomCode();
-		session.setAttribute("codevalid", codeString);
-		session.setAttribute("password", request.getParameter("password"));
-		session.setAttribute("email", email);
-		session.setAttribute("flag", "0");
-		String host = "smtp.gmail.com";
-		String port = "587";
-		String sub = "CODE";
-		String usernameString  = "hoa10chuyenltt2015@gmail.com";
-		String passString = "hoa10chuyen";
-		
 		try {
-			ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
+			ValidEmailBO validEmailBO = new ValidEmailBO();
+			if (validEmailBO.validEmail(email)) {
+				HttpSession session = request.getSession();
+				String codeString = ValidEmail.randomCode();
+				session.setAttribute("codevalid", codeString);
+				session.setAttribute("password", request.getParameter("password"));
+				session.setAttribute("email", email);
+				session.setAttribute("flag", "0");
+				String host = "smtp.gmail.com";
+				String port = "587";
+				String sub = "CODE";
+				String usernameString  = "hoa10chuyenltt2015@gmail.com";
+				String passString = "hoa10chuyen";
+				ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
+				destination = "/Confirm.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+			else {
+				request.setAttribute("alertMsg", "Tai khoan khong ton tai");
+				destination = "/ForgetPassword.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+			
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		destination = "/Confirm.jsp";
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-		rd.forward(request, response);
 	}
 }
