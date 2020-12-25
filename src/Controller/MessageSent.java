@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Model.BEAN.Message_Sent;
-import Model.BEAN.User;
-import Model.BO.GetAllUserBO;
 import Model.BO.MessageSentBO;
 
 @WebServlet("/MessageSent")

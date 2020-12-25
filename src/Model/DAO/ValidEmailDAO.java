@@ -16,6 +16,7 @@ public class ValidEmailDAO {
 	private PrintWriter pw = null;
 	Socket soc;
 	Gson gson = new Gson();
+	@SuppressWarnings("unchecked")
 	public boolean validEmail(String email) {
 		try {
 			this.soc = new Socket("localhost", 9696);
@@ -58,6 +59,7 @@ public class ValidEmailDAO {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public int validAcc(String email, String username) {
 		try {
 			this.soc = new Socket("localhost", 9696);

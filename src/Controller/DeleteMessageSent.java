@@ -11,12 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Model.BEAN.Message;
 import Model.BEAN.Message_Sent;
-import Model.BEAN.User;
 import Model.BO.DeleteMessageBO;
-import Model.BO.GetAllUserBO;
-import Model.BO.HomepageBO;
 import Model.BO.MessageSentBO;
 
 @WebServlet("/DeleteMessageSent")
