@@ -57,19 +57,19 @@ public class Register extends HttpServlet {
 			}
 			else if (valid==1){
 				request.setAttribute("alertMsg", "Username da ton tai");
-				destination = "/Register.jsp";
+				destination = "/RegisterForm.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}
 			else if (valid==2) {
 				request.setAttribute("alertMsg", "Email da ton tai");
-				destination = "/Register.jsp";
+				destination = "/RegisterForm.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}
 			else {
 				request.setAttribute("alertMsg", "Error");
-				destination = "/Register.jsp";
+				destination = "/RegisterForm.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}

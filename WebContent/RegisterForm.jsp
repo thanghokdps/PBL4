@@ -27,18 +27,18 @@
 <body>
   <div id="login-page">
     <div class="container">
-      <form name="formRegister" class="form-login" action="index.html" onsubmit="return check()">
+      <form name="formRegister" class="form-login" action="Register" onsubmit="return check()">
         <h2 class="form-login-heading">sign up now</h2>
         <div class="login-wrap">
-          <input type="text" class="form-control" placeholder="User Name" name="username" autofocus>
+          <input type="text" class="form-control" placeholder="User Name" name="username" autofocus required>
           <br>
-          <input type="text" class="form-control" placeholder="Email" name="email">
+          <input type="text" class="form-control" placeholder="Email" name="email" required>
           <br>
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <input type="password" class="form-control" placeholder="Password" name="password" required>
           <br>
-          <input type="password" class="form-control" placeholder="Retype Password" name="confirmpass">
+          <input type="password" class="form-control" placeholder="Retype Password" name="confirmpass" required>
           <br>
-          <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SIGN UP</button>
+          <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> SIGN UP</button>
           <hr>
           <div class="registration">
             You already have an account?<br/>
@@ -67,11 +67,7 @@
     var username = document.formRegister.username.value
     var pass = document.formRegister.password.value
     var conpass = document.formRegister.confirmpass.value
-    if (email =='' || pass =='' || conpass=='' || username=='') {
-      alert('Khong duoc de trong')
-      return false
-    }
-    else if(!(pass===conpass)){
+    if(!(pass===conpass)){
       alert('mat khau khong trung nhau')
       return false
     }
