@@ -124,11 +124,11 @@
                     <!-- <a href="#">Download all attachments</a> |
                     <a href="#">View all images</a> -->
                   </p>
+                  <ul>
 					<%
 						for (int i = 0; i < attachment.size(); i++) {
 								String f_n = (attachment.get(i)).getfile_name();
 					%>
-                  <ul>
                     <li>
                       <!-- <a class="atch-thumb" href="#">
                         <img src="img/instagram.jpg">
@@ -141,10 +141,10 @@
                         <a href="DownloadAttachment?id_attachment=<%=attachment.get(i).getid()%>">Download</a>
                       </div>
                     </li>
+                    <%}%>
                   </ul>
-                </div>
-           		<%}} else {%>
-           		<hr><%} %>             
+                </div>  
+                <%} else {%> <hr><%} %> 
                 <div class="compose-btn pull-left">
                   <a href="Compose?name_sender=<%=name%>" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
                   <a data-original-title="Delete" data-placement="top" data-toggle="dropdown" class="btn mini tooltips" href="DeleteMessage?id_mess<%=message.getid() %>" onclick="return confirm('Are you sure?')">

@@ -79,7 +79,7 @@
                   <button class="btn btn-sm"  onclick="javascript:history.back()"><i class="fa fa-times"></i> Discard</button>
                 </div>
                 <div class="compose-mail">
-                  <form role="form-horizontal" method="post" action="Compose" id="formcompose">
+                  <form role="form-horizontal" method="post" action="Compose" id="formcompose" enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="to" class="">To:</label>
                       <input type="text" tabindex="1" class="form-control" name="receiver" value="<%=name_sender %>" required>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="compose-editor">
                       <textarea class="wysihtml5 form-control" rows="9" name="content"></textarea>
-                      <input type="file" class="default" multiple>
+                      <input type="file" class="default" name="file" size="35" multiple>
                     </div>
                   </form>
                   <div class="compose-btn">
