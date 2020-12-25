@@ -35,7 +35,6 @@
           <input type="password" class="form-control" placeholder="Password" name="PassWord" required>
           <label class="checkbox">
             <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
-            </span>
             </label>
           <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
           <hr>
