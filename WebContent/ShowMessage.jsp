@@ -35,7 +35,7 @@
       <!--logo end-->
       <div class="top-menu">
         <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="Login.jsp">Logout</a></li>
+          <li><a class="logout" href="logout">Logout</a></li>
         </ul>
       </div>
     </header>
