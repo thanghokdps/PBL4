@@ -41,7 +41,17 @@ public class DeleteMessageSent extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("name", name_user);
 		session.setAttribute("id", id_user);
-		if (listId == null) {
+		String idString = request.getParameter("id_mess");
+		if (idString!=null) {
+			if (deleteMessage.deleteMessageSent1(idString) == true) {
+				listMessage = messageSentBO.getListMessageSent(id_user);
+				request.setAttribute("listMessage", listMessage);
+				destination = "/MessageSent.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+		}
+		else if (listId == null) {
 			listMessage = messageSentBO.getListMessageSent(id_user);
 			request.setAttribute("listMessage", listMessage);
 		} else {

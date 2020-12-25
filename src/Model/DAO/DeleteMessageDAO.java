@@ -64,6 +64,47 @@ public class DeleteMessageDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public boolean deleteMessage1(String ID) throws SQLException, IOException {
+		try {
+			this.soc = new Socket("localhost", 9696);
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
+		try {
+			is = soc.getInputStream();
+			isr = new InputStreamReader(is);
+			br = new BufferedReader(isr);
+			if (pw == null) {
+				pw = new PrintWriter(soc.getOutputStream());
+			}
+		} catch (Exception e) {
+			System.out.println("Error User Thread");
+		}
+		boolean check = false;
+		try {
+			HashMap<String, String> pairs = new HashMap<>();
+			pairs.put("command", "delete_Mess");
+			pairs.put("id", ID);
+			String request = gson.toJson(pairs);
+			request = request + "\n";
+			pw.write(request);
+			pw.flush();
+			String strRes = br.readLine();
+			HashMap<String, String> response = new HashMap<>();
+			response = gson.fromJson(strRes, response.getClass());
+			String status = response.get("status");
+			if (status.equals("fail")) {
+				check = false;
+			} else {
+				check = true;
+			}
+		} catch (IOException e) {
+			System.out.println("ToServer");
+		}
+		return check;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public boolean deleteMessageSent(String[] listId) throws SQLException, IOException {
 		try {
 			this.soc = new Socket("localhost", 9696);
@@ -100,6 +141,47 @@ public class DeleteMessageDAO {
 				} else {
 					check = true;
 				}
+			}
+		} catch (IOException e) {
+			System.out.println("ToServer");
+		}
+		return check;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean deleteMessageSent1(String ID) throws SQLException, IOException {
+		try {
+			this.soc = new Socket("localhost", 9696);
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
+		try {
+			is = soc.getInputStream();
+			isr = new InputStreamReader(is);
+			br = new BufferedReader(isr);
+			if (pw == null) {
+				pw = new PrintWriter(soc.getOutputStream());
+			}
+		} catch (Exception e) {
+			System.out.println("Error User Thread");
+		}
+		boolean check = false;
+		try {
+			HashMap<String, String> pairs = new HashMap<>();
+			pairs.put("command", "delete_MessSent");
+			pairs.put("id", ID);
+			String request = gson.toJson(pairs);
+			request = request + "\n";
+			pw.write(request);
+			pw.flush();
+			String strRes = br.readLine();
+			HashMap<String, String> response = new HashMap<>();
+			response = gson.fromJson(strRes, response.getClass());
+				String status = response.get("status");
+			if (status.equals("fail")) {
+				check = false;
+			} else {
+				check = true;
 			}
 		} catch (IOException e) {
 			System.out.println("ToServer");

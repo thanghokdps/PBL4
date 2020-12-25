@@ -55,7 +55,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Forgot Password ?</h4>
               </div>
-              <form name="formforget" action="ForgetPassword" method="post" onsubmit="return check()">
+              <form name="formForget" action="ForgetPassword" method="post" onsubmit="return check()">
 	             <div class="modal-body">
 	               <p>Enter your e-mail address below to reset your password.</p>
 	               <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" required>
@@ -88,13 +88,10 @@
   </script>
   <script type="text/javascript">
 	function check() {
-		var email = document.formforget.email.value
-		var pass = document.formforget.password.value
-		var conpass = document.formforget.confirmpass.value
-		if (email == '' || pass == '' || conpass == '') {
-			alert('Khong duoc de trong')
-			return false
-		} else if(!(pass===conpass)){
+		var email = document.formForget.email.value
+		var pass = document.formForget.password.value
+		var conpass = document.formForget.confimpass.value
+		if(!(pass===conpass)){
 		      alert('mat khau khong trung nhau')
 		      return false
 	    } else if (!(email.includes('@gmail.com'))) {

@@ -97,8 +97,7 @@
                   <div class="col-md-4">
                     <div class="compose-btn pull-right">
                       <a href="Compose?name_sender=<%=name_sender%>" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
-                      <a data-original-title="Delete" data-placement="top" data-toggle="dropdown" class="btn mini tooltips" href="DeleteMessageSent?listDelete<%=message.getid() %>" onclick="return confirm('Are you sure?')">
-                    <i class="fa fa-trash"></i></a>
+                      <a data-original-title="Delete" data-placement="top" class="btn mini tooltips" href="DeleteMessageSent?id_mess=<%=message.getid()%>" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
                     </div>
                   </div>
                 </div>
@@ -148,7 +147,7 @@
                 <%} else {%><hr><%} %>
                 <div class="compose-btn pull-left">
                   <a href="Compose?name_sender=<%=name_sender%>" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
-                  <a data-original-title="Delete" data-placement="top" data-toggle="dropdown" class="btn mini tooltips" href="DeleteMessageSent?id_mess<%=message.getid() %>" onclick="return confirm('Are you sure?')">
+                  <a data-original-title="Delete" data-placement="top" class="btn mini tooltips" href="DeleteMessageSent?id_mess=<%=message.getid()%>" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
                 </div>
               </div>
             </section>
