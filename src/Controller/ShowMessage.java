@@ -49,7 +49,7 @@ public class ShowMessage extends HttpServlet {
 		session.setAttribute("name", name_user);
 		session.setAttribute("id", id_user);
 		request.setAttribute("listUser", listUsers);
-		destination = "/ShowMessage.jsp";
+		destination = "/ShowMessageSent.jsp";
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 		rd.forward(request, response);
 	}

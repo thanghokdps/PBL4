@@ -22,7 +22,7 @@
 %>
 <body>
 	<div class="topDiv">
-		<h2 align="center"><%=session.getAttribute("name")%>'s Mail
+		<h2 align="center"><%=session.getAttribute("name")%>'s InBox
 		</h2>
 	</div>
 	<div class="centerDiv">

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Home page</title>
+<title>Sent page</title>
 <link rel="stylesheet" type="text/css" href="all.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,7 +23,7 @@
 %>
 <body>
 	<div class="topDiv">
-		<h2 align="center"><%=session.getAttribute("name")%>'s Mail
+		<h2 align="center"><%=session.getAttribute("name")%>'s SentBox
 		</h2>
 	</div>
 	<div class="centerDiv">
