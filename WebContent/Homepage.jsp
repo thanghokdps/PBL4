@@ -6,11 +6,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Home page</title>
-<link rel="stylesheet" type="text/css" href="all.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Inbox</title>
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--external css-->
+  <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
 </head>
 <%
 	String userName = String.valueOf(session.getAttribute("name"));
@@ -21,92 +34,178 @@
 	session.setAttribute("id_user", id_user);
 %>
 <body>
-	<div class="topDiv">
-		<h2 align="center"><%=session.getAttribute("name")%>'s InBox
-		</h2>
-	</div>
-	<div class="centerDiv">
-		<form action="SearchMessage" method="POST">
-			<span> LOOK FOR INFORMATION : </span><span><input type="text"
-				width="35%" name="search"></span> <span><i
-				class="fa fa-search"></i></span> <span><input type="submit"
-				value="Search"></span>
-		</form>
-	</div>
-	<form action="DeleteMessage" method="POST">
-		<table border="1" width="100%">
-			<%
+<section id="container" class="sidebar-closed">
+    <!--header start-->
+    <header class="header black-bg">
+      <!--logo start-->
+      <a href="Authenticate" class="logo"><b>MY<span>Mail</span></b></a>
+      <!--logo end-->
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="Login.jsp">Logout</a></li>
+        </ul>
+      </div>
+    </header>
+    <!--header end-->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <!-- page start-->
+        <div class="row mt">
+          <div class="col-sm-3">
+            <section class="panel">
+              <div class="panel-body">
+                <a href="Compose.jsp" class="btn btn-compose">
+                  <i class="fa fa-pencil"></i>  Compose Mail
+                  </a>
+                <ul class="nav nav-pills nav-stacked mail-nav">
+                  <li class="active"><a href="Authenticate"> <i class="fa fa-inbox"></i> Inbox  <!-- <span class="label label-theme pull-right inbox-notification">3</span> --></a></li>
+                  <li><a href="MessageSent"> <i class="fa fa-envelope-o"></i> Sent Mail</a></li>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="col-sm-9">
+            <section class="panel">
+              <header class="panel-heading wht-bg">
+                <h4 class="gen-case">
+                    <%=userName%>'s Inbox
+                    <form action="SearchMessage" class="pull-right mail-src-position">
+                      <div class="input-append">
+                        <input type="text" class="form-control " placeholder="Search Mail" name="search">
+                      </div>
+                    </form>
+                  </h4>
+              </header>
+              <div class="panel-body minimal">
+                <div class="mail-option">
+                  <div class="chk-all">
+                    <div class="pull-left mail-checkbox">
+                      <input type="checkbox" class="" id="selectAll">
+                    </div>
+                    <div class="btn-group">
+                      <a data-toggle="dropdown" href="javascript:{}" class="btn mini all">
+                        All
+                        </a>
+                      <!-- <ul class="dropdown-menu">
+                        <li><a href="#"> Read</a></li>
+                        <li><a href="#"> Unread</a></li>
+                      </ul> -->
+                    </div>
+                  </div>
+                  <div class="btn-group">
+                    <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="javascript:{}" onclick="document.getElementById('refesh').submit();" class="btn mini tooltips">
+                      <i class=" fa fa-refresh"></i>
+                      </a>
+                  </div>  
+                  <div class="btn-group">
+                    <a data-original-title="Delete" data-placement="top" data-toggle="dropdown" class="btn mini tooltips" href="javascript:{}" onclick="document.getElementById('formdelete').submit();">
+                    <i class="fa fa-trash"></i></a>
+                  </div>                 
+                  <!-- <ul class="unstyled inbox-pagination">
+                    <li><span>1-50 of 99</span></li>
+                    <li>
+                      <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
+                    </li>
+                    <li>
+                      <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
+                    </li>
+                  </ul> -->
+                </div>
+                <div class="table-inbox-wrap ">
+               	<form action="DeleteMessage" method="POST" id="formdelete">
+               	<table class="table table-inbox table-hover">
+               	<%
 				ArrayList<User> listUser = (ArrayList<User>) request.getAttribute("listUser");
-			%>
-			<%
+				%>
+				<%
 				ArrayList<Message> listMessage = (ArrayList<Message>) request.getAttribute("listMessage");
 				if (listMessage.size() != 0) {
-			%>
-			<TR>
-				<TH></TH>
-				<TH>Sender</TH>
-				<TH>Title</TH>
-				<TH>Time</TH>
-				<TH></TH>
-			</TR>
-			<%
-				for (int i = 0; i < listMessage.size(); i++) {
-			%>
-			<tr>
-				<td align='center'><input type="checkbox" name="listDelete"
-					id="listDelete" value="<%=listMessage.get(i).getid()%>"></td>
-				<td>
+				%>
+                    <tbody>
+                    <%
+					for (int i = 0; i < listMessage.size(); i++) {
+					%>
+					
+					<tr class="inbox-small-cells">
+						<td align='center' class="inbox-small-cells" ><input type="checkbox" name="listDelete"
+							id="listDelete" value="<%=listMessage.get(i).getid()%>"></td>
+						<td class="view-message dont-show">
+						<a href="ShowMessage?id_mess=<%=listMessage.get(i).getid()%>">
+						<%
+								String name = "";
+										for (int j = 0; j < listUser.size(); j++) {
+											if (listUser.get(j).getid() == listMessage.get(i).getid_sender()) {
+												name = listUser.get(j).getusername();
+												break;
+											}
+										}
+							%> <%=name%>
+						</a>	
+						</td>
+						<td class="view-message"><a href="ShowMessage?id_mess=<%=listMessage.get(i).getid()%>"><%=listMessage.get(i).gettitle()%></a></td>
+						<td class="view-message inbox-small-cells"><a href="ShowMessage?id_mess=<%=listMessage.get(i).getid()%>"></a></td>
+						<td class="view-message text-right"><%=listMessage.get(i).getcreate_at()%></td>
+					</tr>
 					<%
-						String name = "";
-								for (int j = 0; j < listUser.size(); j++) {
-									if (listUser.get(j).getid() == listMessage.get(i).getid_sender()) {
-										name = listUser.get(j).getusername();
-										break;
-									}
-								}
-					%> <%=name%>
-				</td>
-				<td><%=listMessage.get(i).gettitle()%></td>
-				<td><%=listMessage.get(i).getcreate_at()%></td>
-				<td align='center'><a
-					href="ShowMessage?id_mess=<%=listMessage.get(i).getid()%>"><i
-						class="fa fa-eye"></i></a></td>
-			</tr>
-			<%
-				}
-			%>
-		</table>
-		<div class="centerDiv">
-			<span><i class="fa fa-trash"></i></span><span><input
-				type="submit" name="btnDel" value="Delete"
-				onclick="return confirm('Are you sure?')"></span>
-		</div>
-	</form>
-	<div class="centerDiv">
-		<span> <i class="fa fa-plus-square"></i>
-		</span> 
-		<span><a href="Compose.jsp"> <input type="button" name="btAdd" value="Compose"></a> </span>
-		<span><a href="MessageSent"> <input type="button" name="btSent" value="Sent"></a> </span>
-	</div>
-	<%
-		} else {
-	%>
-	<div class="centerDiv">
-		<h3>Empty</h3>
-		<a href="Compose.jsp"> <i class="fa fa-plus-square"></i><input
-			type="button" name="btAdd" value="Compose"></a>
-		<a href="MessageSent"> <i class="fa fa-plus-square"></i><input
-			type="button" name="btSent" value="Sent"></a>
-	</div>
-	<%
-		}
-	%>
-	<form action="Authenticate" name="refesh" id="refesh" method="POST">
-	</form>
-</body>
-</html>
-
-<script type="text/javascript">
+						}
+					%>
+					<%
+						} else {
+					%>
+					<div class="centerDiv">
+						<h3>Empty</h3>
+					</div>
+					<%
+						}
+					%>
+                    </tbody>
+                  </table>
+               	</form> 
+         		<form action="Authenticate" name="refesh" id="refesh" method="POST"></form>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+      <div class="text-center">
+        <p>
+          &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
+        </p>
+        <div class="credits">
+          <!--
+            You are NOT allowed to delete the credit link to TemplateMag with free version.
+            You can delete the credit link only if you bought the pro version.
+            Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
+            Licensing information: https://templatemag.com/license/
+          -->
+          Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
+        </div>
+        <a href="inbox.html#" class="go-top">
+          <i class="fa fa-angle-up"></i>
+          </a>
+      </div>
+    </footer>
+    <!--footer end-->
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="lib/jquery.scrollTo.min.js"></script>
+  <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <!--common script for all pages-->
+  <script src="lib/common-scripts.js"></script>
+  <!--script for this page-->
+  <script type="text/javascript">
 	var auto_refresh = setInterval(function() {
 		submitform();
 	}, 15000);
@@ -124,10 +223,22 @@
 			document.getElementById("refesh").submit();
 		}
 	}
-</script>
-<% String message = (String)request.getAttribute("alertMsg");%>
-<script type="text/javascript">
-   	var msg = "<%=message %>";
-   	if (msg!="null"&&msg!="")
-   		alert(msg);
-</script>
+	</script>
+	<script type="text/javascript">
+	document.getElementById('selectAll').onclick = function() {
+		  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+		  for (var checkbox of checkboxes) {
+		    checkbox.checked = this.checked;
+		  }
+		}
+	</script>
+	<% String message = (String)request.getAttribute("alertMsg");%>
+	<script type="text/javascript">
+	   	var msg = "<%=message %>";
+	   	if (msg!="null"&&msg!="")
+	   		alert(msg);
+	</script>
+</body>
+</html>
+
+

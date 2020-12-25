@@ -34,7 +34,7 @@
           <br>
           <input type="password" class="form-control" placeholder="Password" name="PassWord" required>
           <label class="checkbox">
-            <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
+            <a data-toggle="modal" href="Login.jsp#myModal"> Forgot Password?</a>
             </span>
             </label>
           <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
@@ -46,7 +46,8 @@
               </a>
           </div>
         </div>
-        <!-- Modal -->
+      </form>
+       <!-- Modal -->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -54,23 +55,24 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Forgot Password ?</h4>
               </div>
-              <div class="modal-body">
-                <p>Enter your e-mail address below to reset your password.</p>
-                <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-                <br>
-                <input type="password" name="password" placeholder="Type new nassword" autocomplete="off" class="form-control placeholder-no-fix">
-                <br>
-                <input type="password" name="confimpass" placeholder="Retype password" autocomplete="off" class="form-control placeholder-no-fix">
-              </div>
-              <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                <button class="btn btn-theme" type="button">Submit</button>
-              </div>
+              <form name="formforget" action="ForgetPassword" method="post" onsubmit="return check()">
+	             <div class="modal-body">
+	               <p>Enter your e-mail address below to reset your password.</p>
+	               <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" required>
+	               <br>
+	               <input type="password" name="password" placeholder="Type new nassword" autocomplete="off" class="form-control placeholder-no-fix" required>
+	               <br>
+	               <input type="password" name="confimpass" placeholder="Retype password" autocomplete="off" class="form-control placeholder-no-fix" required>
+	             </div>
+	             <div class="modal-footer">
+	               <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+	               <button class="btn btn-theme" type="submit">Submit</button>
+	             </div>
+              </form>
             </div>
           </div>
         </div>
         <!-- modal -->
-      </form>
     </div>
   </div>
   <!-- js placed at the end of the document so the pages load faster -->
@@ -84,6 +86,30 @@
       speed: 500
     });
   </script>
+  <script type="text/javascript">
+	function check() {
+		var email = document.formforget.email.value
+		var pass = document.formforget.password.value
+		var conpass = document.formforget.confirmpass.value
+		if (email == '' || pass == '' || conpass == '') {
+			alert('Khong duoc de trong')
+			return false
+		} else if(!(pass===conpass)){
+		      alert('mat khau khong trung nhau')
+		      return false
+	    } else if (!(email.includes('@gmail.com'))) {
+	        alert('khong dung la dinh dang Gmail')
+	        return false
+	    } else
+			return true
+	}
+</script>
+<% String message = (String)request.getAttribute("alertMsg");%>
+<script type="text/javascript">
+   	var msg = "<%=message %>";
+   	if (msg!="null"&&msg!="")
+   		alert(msg);
+</script>
 </body>
 
 </html>

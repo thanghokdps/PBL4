@@ -78,6 +78,7 @@ public class Confirm extends HttpServlet {
 			}
 		}
 		else {
+			request.setAttribute("alertMsg", "Sai ma xac thuc");
 			destination = "/Confirm.jsp";
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 			rd.forward(request, response);

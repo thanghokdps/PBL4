@@ -46,7 +46,7 @@ public class ForgetPassword extends HttpServlet {
 			}
 			else {
 				request.setAttribute("alertMsg", "Tai khoan khong ton tai");
-				destination = "/ForgetPassword.jsp";
+				destination = "/Login.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}
