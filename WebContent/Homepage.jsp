@@ -109,7 +109,7 @@
 										<a data-original-title="Delete" data-placement="top"
 											data-toggle="dropdown" class="btn mini tooltips"
 											href="javascript:{}"
-											onclick="document.getElementById('formdelete').submit();">
+											onclick="if(confirm('Are you sure?'))document.getElementById('formdelete').submit();">
 											<i class="fa fa-trash"></i>
 										</a>
 									</div>

@@ -35,6 +35,10 @@
 						<i class="fa fa-lock"></i> Submit
 					</button>
 				</div>
+				<div class="registration">
+					<a class="" href="Login.jsp">
+						Back </a>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -53,8 +57,7 @@
 		String message = (String) request.getAttribute("alertMsg");
 	%>
 	<script type="text/javascript">
-   	var msg = "<%=message%>
-		";
+   	var msg = "<%=message%>";
 		if (msg != "null" && msg != "")
 			alert(msg);
 	</script>

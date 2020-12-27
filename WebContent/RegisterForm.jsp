@@ -84,8 +84,7 @@
 		String message = (String) request.getAttribute("alertMsg");
 	%>
 	<script type="text/javascript">
-   	var msg = "<%=message%>
-		";
+   	var msg = "<%=message%>";
 		if (msg != "null" && msg != "")
 			alert(msg);
 	</script>
