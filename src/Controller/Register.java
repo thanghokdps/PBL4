@@ -42,7 +42,7 @@ public class Register extends HttpServlet {
 				String codeString = ValidEmail.randomCode();
 				session.setAttribute("codevalid", codeString);
 				session.setAttribute("username", username);
-				session.setAttribute("password", request.getParameter("password"));
+				session.setAttribute("password", CryptWithMD5.cryptWithMD5(request.getParameter("password")));
 				session.setAttribute("email", email);
 				session.setAttribute("flag", "1");
 				String host = "smtp.gmail.com";
@@ -51,7 +51,7 @@ public class Register extends HttpServlet {
 				String usernameString  = "hoa10chuyenltt2015@gmail.com";
 				String passString = "hoa10chuyen";
 				ValidEmail.sendEmail(host, port, usernameString, passString, email, sub, codeString);
-				destination = "/ConfirmForm.jsp";
+				destination = "/Confirm.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}

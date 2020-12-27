@@ -34,7 +34,26 @@ public class DeleteMessage extends HttpServlet {
 		String id_user = ss.getAttribute("id").toString();
 		DeleteMessageBO deleteMessage = new DeleteMessageBO();
 		String listId[] = request.getParameterValues("listDelete");
-		if (listId == null) {
+		String idString = request.getParameter("id_mess");
+		if(idString!=null) {
+			if (deleteMessage.deleteMessage1(idString) == true) {
+				HomepageBO homepageBO = new HomepageBO();
+				ArrayList<Message> listMessage = new ArrayList<Message>();
+				listMessage = homepageBO.getListMessage(id_user);
+				GetAllUserBO getAllUserBO = new GetAllUserBO();
+				ArrayList<User> listUsers = new ArrayList<User>();
+				listUsers = getAllUserBO.getListUser();
+				HttpSession session = request.getSession();
+				session.setAttribute("name", name_user);
+				session.setAttribute("id", id_user);
+				request.setAttribute("listMessage", listMessage);
+				request.setAttribute("listUser", listUsers);
+				destination = "/Homepage.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+		}
+		else if (listId == null) {
 			HomepageBO homepageBO = new HomepageBO();
 			ArrayList<Message> listMessage = new ArrayList<Message>();
 			listMessage = homepageBO.getListMessage(id_user);

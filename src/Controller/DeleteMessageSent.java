@@ -11,12 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Model.BEAN.Message;
 import Model.BEAN.Message_Sent;
-import Model.BEAN.User;
 import Model.BO.DeleteMessageBO;
-import Model.BO.GetAllUserBO;
-import Model.BO.HomepageBO;
 import Model.BO.MessageSentBO;
 
 @WebServlet("/DeleteMessageSent")
@@ -41,7 +37,17 @@ public class DeleteMessageSent extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("name", name_user);
 		session.setAttribute("id", id_user);
-		if (listId == null) {
+		String idString = request.getParameter("id_mess");
+		if (idString!=null) {
+			if (deleteMessage.deleteMessageSent1(idString) == true) {
+				listMessage = messageSentBO.getListMessageSent(id_user);
+				request.setAttribute("listMessage", listMessage);
+				destination = "/MessageSent.jsp";
+				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+				rd.forward(request, response);
+			}
+		}
+		else if (listId == null) {
 			listMessage = messageSentBO.getListMessageSent(id_user);
 			request.setAttribute("listMessage", listMessage);
 		} else {

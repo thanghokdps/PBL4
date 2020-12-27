@@ -22,4 +22,24 @@ public class DeleteMessageBO {
 		}
 		return check;
 	}
+	
+	public boolean deleteMessage1(String id) {
+		boolean check = false;
+		try {
+			check = deleteMessageDAO.deleteMessage1(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return check;
+	}
+	
+	public boolean deleteMessageSent1(String id) {
+		boolean check = false;
+		try {
+			check = deleteMessageDAO.deleteMessageSent1(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return check;
+	}
 }

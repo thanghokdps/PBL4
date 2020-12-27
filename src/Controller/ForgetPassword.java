@@ -31,7 +31,7 @@ public class ForgetPassword extends HttpServlet {
 				HttpSession session = request.getSession();
 				String codeString = ValidEmail.randomCode();
 				session.setAttribute("codevalid", codeString);
-				session.setAttribute("password", request.getParameter("password"));
+				session.setAttribute("password", CryptWithMD5.cryptWithMD5(request.getParameter("password")));
 				session.setAttribute("email", email);
 				session.setAttribute("flag", "0");
 				String host = "smtp.gmail.com";
@@ -50,7 +50,6 @@ public class ForgetPassword extends HttpServlet {
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}
-			
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {

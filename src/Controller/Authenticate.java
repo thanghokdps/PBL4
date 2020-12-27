@@ -29,18 +29,22 @@ public class Authenticate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String destination = null;
-		String name = request.getParameter("UserName");
+		String name = request.getParameter("UserName");	
 		String pass = request.getParameter("PassWord");
+		String pass_MD5 = " ";
+		if (pass != null) {
+			pass_MD5 = CryptWithMD5.cryptWithMD5(pass);
+		}
 		HttpSession sessionget = request.getSession();
 		String nameget = (String) sessionget.getAttribute("userName");
 		String passget = (String) sessionget.getAttribute("passWord");
 		if (nameget != null && passget != null) {
 			name = nameget;
-			pass = passget;
+			pass_MD5 = passget;
 		}
 		AuthenticateBO authenticateBO = new AuthenticateBO();
 		User user = new User();
-		user = authenticateBO.isUser(name, pass);
+		user = authenticateBO.isUser(name, pass_MD5);
 		if (user.getid() != 0) {
 			HomepageBO homepageBO = new HomepageBO();
 			ArrayList<Message> listMessage = new ArrayList<Message>();

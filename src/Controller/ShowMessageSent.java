@@ -16,16 +16,17 @@ import Model.BEAN.Message_Sent;
 import Model.BO.GetListAttachmentBO;
 import Model.BO.ShowMessageBO;
 
-
 @WebServlet("/ShowMessageSent")
 public class ShowMessageSent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String destination = null;
 		HttpSession ss = request.getSession();
 		String name_user = ss.getAttribute("name").toString();
@@ -42,6 +43,7 @@ public class ShowMessageSent extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("name", name_user);
 		session.setAttribute("id", id_user);
+		session.setAttribute("download", "sent");
 		destination = "/ShowMessageSent.jsp";
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 		rd.forward(request, response);
